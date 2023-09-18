@@ -14,6 +14,7 @@ class linearList
             for(int i = 0; i < maxSize; i++){
                 arr[i] = 0;
             }
+            notNull = 0;
             
         };
         void show(){
@@ -22,10 +23,19 @@ class linearList
             }
             cout << endl;
         }
+
+        void Insert(int x){
+            if(notNull >= length){
+                length++;
+            };
+            arr[notNull] = x;
+            notNull++;
+            
+        }
         void sortedInsert(int x){
             int temp = x;
             for(int i = 0;i < length-1; i++){
-                if(arr[i] > arr[i-1]){
+                if(arr[i] < arr[i-1]){
                     LLsort();
                 }
             }
@@ -33,15 +43,19 @@ class linearList
             for(int i = length;i > 0; i--){
                 if(x<arr[i-1]){
                     arr[i] = arr[i-1];
-                }else{
+                    if(i == 1) arr[0] = x;
+                }
+                else{
+
                     arr[i] = x;
                 }
             }
-
+            length++;
         }
 
 
     private:
+        int notNull;
         int *arr;
         int length;
         int maxSize;
@@ -116,3 +130,27 @@ class linearList
 
 
 };
+
+
+int main(){
+    int x;
+    cin >> x;
+    linearList oneList = linearList(x);
+    x = 0;
+    while(true){
+        cin >> x;
+        if(x == -1){
+            break;
+        }
+
+        oneList.Insert(x);
+    }
+    oneList.show();
+    cin >> x;
+    oneList.sortedInsert(x);
+    oneList.show();
+    return 0;
+}
+
+
+    
