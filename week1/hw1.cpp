@@ -18,39 +18,59 @@ class linearList
             
         };
         void show(){
-            for(int i = 0; i< length; i++){
+            for(int i = 0; i< notNull; i++){
                 cout << arr[i] << " ";
             }
             cout << endl;
         }
-
+        
         void Insert(int x){
             if(notNull >= length){
                 length++;
             };
             arr[notNull] = x;
             notNull++;
-            
+            check();
         }
+        void DeleteMin(){
+            int min = arr[0],index = 0;
+            for(int i = 0; i < notNull;i++){
+                if(min > arr[i]){
+                    min = arr[i];
+                    index = i;
+                }
+            }
+            for(int i = index; i < notNull;i++){
+                arr[i] = arr[i+1];
+            }
+
+            if(notNull == length){
+                length--;
+            }
+            notNull --;
+        }
+
         void sortedInsert(int x){
             int temp = x;
-            for(int i = 0;i < length-1; i++){
-                if(arr[i] < arr[i-1]){
+            for(int i = 0;i < notNull-1; i++){
+                if(arr[i] > arr[i+1]){
                     LLsort();
                 }
             }
             
-            for(int i = length;i > 0; i--){
-                if(x<arr[i-1]){
+            for(int i = notNull;i > 0; i--){
+                if(x < arr[i-1]){
                     arr[i] = arr[i-1];
                     if(i == 1) arr[0] = x;
                 }
                 else{
-
                     arr[i] = x;
+                    break;
                 }
             }
-            length++;
+            if(notNull == length) length ++;
+            notNull ++;
+            check();
         }
 
 
@@ -61,7 +81,7 @@ class linearList
         int maxSize;
         void LLsort(int start = 0,int end = -1)//Seems like Tim Sort
         {
-            if(end == -1)end = length;
+            if(end == -1)end = notNull;
             else if(end - start < 0){
                 cout << "end-start < 0 is not be permitted!";
                 return;
@@ -69,19 +89,13 @@ class linearList
 
             // Insert Sort:
             if(end - start < 20){
-                for(int i = start; i < end-1; i++){
-                    if(arr[i] > arr[i+1]){
-                        int temp = arr[i+1];
-                        for(int j = i; j >= start; j--){
-                            if(temp > arr[j]){
-                                arr[j+1] = arr[j];
-                            }
-                            else{
-                                arr[j] = temp;
-                            }
-                        }
-
+                int temp,i,j;
+                for(i = start+1; i < end; i++){
+                    temp = arr[i];
+                    for(j = i; j > start&& temp < arr[j-1]; j--){
+                        arr[j] = arr[j-1];
                     }
+                    arr[j] = temp;
                 }
             }
             
@@ -127,16 +141,29 @@ class linearList
             }
         }
 
+        void check(){
+            if(length == maxSize)
+            {
+                extendList();
+            }
+        }
+
+        void extendList(){
+            int *newArr = new int[maxSize*2];
+            for(int i = 0; i < length; i++){
+                newArr[i] = arr[i];
+            }
+            delete arr;
+            arr = newArr;
+        }
 
 
 };
 
 
 int main(){
-    int x;
-    cin >> x;
-    linearList oneList = linearList(x);
-    x = 0;
+    linearList oneList = linearList();
+    int x = 0;
     while(true){
         cin >> x;
         if(x == -1){
@@ -146,8 +173,14 @@ int main(){
         oneList.Insert(x);
     }
     oneList.show();
+    cout << "1-(1): insert"<<endl;
     cin >> x;
     oneList.sortedInsert(x);
+    cout << "inserted"<<endl;
+    oneList.show();
+    cout << "2-(1): delete min"<<endl;
+    oneList.DeleteMin();
+    cout << "deleted" << endl;
     oneList.show();
     return 0;
 }
