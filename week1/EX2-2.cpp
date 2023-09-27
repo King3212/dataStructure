@@ -128,16 +128,25 @@ bool LinkList<T>::pushforward(T x){
 
 template <class T>
 bool LinkList<T>::deleteItem(T x){
-    Node<T> *temp = tail->next,*keep;
-    while(temp && temp != tail->next){
-        keep = temp;
-        if(temp->data == x){
-            keep->next = temp->next;
-            size--;
+    Node<T> *temp = tail,*rub;
+    if(size == 0) return true;
+    else if(size == 1){
+        delete tail;
+        size --;
+        return true;
+    }
+    do
+    {
+        if (temp->data == x)
+        {
+            rub = temp->next;
+            temp->data = rub->data;
+            temp->next = rub->next;
+            delete rub;
             return true;
         }
         temp = temp->next;
-    }
+    } while (temp != tail);
     return false;
 }
 
@@ -152,8 +161,9 @@ int main(){
         cin >> x;
     }
     one.show();
+    cout << "deleteItem" << endl;
     cin >> x;
-    one.sortedInsert(x);
+    one.deleteItem(x);
     one.show();
     return 0;
 }
