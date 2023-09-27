@@ -7,6 +7,10 @@
         "istream": "cpp",
         "memory": "cpp",
         "vector": "cpp",
-        "xmemory": "cpp"
+        "xmemory": "cpp",
+        "algorithm": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "xlocnum": "cpp"
     }
 }

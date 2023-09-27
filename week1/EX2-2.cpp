@@ -14,39 +14,100 @@ class LinkList{
         Node<T> *tail;
         int size;
     public:
-        void show(){
-            Node<T> *temp = tail->next;
-            while(temp != tail){
-                cout << temp->data << " ";
-                temp = temp-> next;
-            }
-            cout << temp->data << endl;
-        }
+        void show();
         LinkList(T x);
         LinkList();
-        bool pushback(T x);
-        bool pushforward(T x);
+        bool pushBack(T x);
+        bool pushForward(T x);
         bool sortedInsert(T x);
         bool deleteItem(T x);
-
+        bool removeMin();
+        T get(int x);
 
 };
 
+template<class T>
+void LinkList<T>::show()
+{
+    if (size == 0)
+    {
+        cout << "Nothing in it!" << endl;
+        return;
+    }
+    
+    Node<T> *temp = tail->next;
+    while(temp != tail){
+        cout << temp->data << " ";
+        temp = temp-> next;
+    }
+    cout << temp->data << endl;
+}
+template<class T>
+T LinkList<T>::get(int x)
+{
+    if (size == 0 || x < 0)
+    {
+        return T();
+    }else{
+        Node<T> *temp = tail->next;
+        for (int i = 0; i < x; i++)
+        {
+            if (temp == tail)
+            {
+                return T();
+            }
+            temp = temp->next;
+        }
+        if (temp)
+        {
+            return temp->data;
+        }
+    }
+    return T();
+}
 
-
+template<class T>
+bool LinkList<T>::removeMin()
+{
+    if (size == 0)
+    {
+        return false;
+    }
+    
+    try
+    {
+        T min = tail->next->data;
+        Node<T> *temp = tail->next;
+        for (int i = 0; i < size && temp; i++)
+        {
+            if (min > temp->data)
+            {
+                min = temp->data;
+            }
+            temp = temp->next;
+        }
+        return deleteItem(min);
+        
+    }
+    catch(const std::exception& e)
+    {
+        return false;
+    }
+    
+}
 
 template<class T>
 bool LinkList<T>::sortedInsert(T x){
     if(size == 0){
         size ++;
-        return pushforward(x);
+        return pushForward(x);
     }
     try {
         if(x < tail->next->data){
             size ++;
-            return pushforward(x);
+            return pushForward(x);
         }else if(x > tail->data){
-            return pushback(x);
+            return pushBack(x);
         }
         Node<T> *temp = tail->next,*keep = tail;
         while(temp!= tail->next->next && x > temp->data){
@@ -85,7 +146,7 @@ LinkList<T>::LinkList(){
 }
 
 template <class T>
-bool LinkList<T>::pushback(T x){
+bool LinkList<T>::pushBack(T x){
     Node<T> *temp = new Node<T>();
     temp->data = x;
     if(tail == nullptr)
@@ -107,12 +168,12 @@ bool LinkList<T>::pushback(T x){
 }
 
 template <class T>
-bool LinkList<T>::pushforward(T x){
+bool LinkList<T>::pushForward(T x){
     Node<T> *temp = new Node<T>();
     temp->data = x;
     if(size == 0){
         size ++;
-        return pushback(x);
+        return pushBack(x);
     }
     else{
         temp->next = tail->next;
@@ -142,7 +203,12 @@ bool LinkList<T>::deleteItem(T x){
             rub = temp->next;
             temp->data = rub->data;
             temp->next = rub->next;
+            if (tail == rub)
+            {
+                tail = temp;
+            }
             delete rub;
+            size--;
             return true;
         }
         temp = temp->next;
@@ -150,20 +216,38 @@ bool LinkList<T>::deleteItem(T x){
     return false;
 }
 
-    
+#include <vector>
+#define testLength 5
+
+bool Test(){
+    //test input
+    vector<int> testData = {12,46,23,45,22};
+    LinkList<int> *one = new LinkList<int>();
+    for(auto i : testData){
+        one->pushBack(i);
+    }
+    for (int i = 0; i < testLength; i++)
+    {
+        if(one->get(i) != testData[i]) return false;
+    }
+    cout << "finish insert" << endl;
+    one->show();
+    cout << "Remove min:" << endl;
+    for (int i = 0; i < testLength; i++)
+    {
+        if(!one->removeMin()) return false;
+        one->show();
+    }
+    if(!one->removeMin()) return true;
+    return true;
+
+}
+
+
 
 int main(){
-    LinkList<int> one = LinkList<int>();
-    int x = 0;
-    cin >> x;
-    while(x != -1){
-        one.pushback(x);
-        cin >> x;
-    }
-    one.show();
-    cout << "deleteItem" << endl;
-    cin >> x;
-    one.deleteItem(x);
-    one.show();
+    if (Test()){
+        cout << "Test pass!" << endl;
+    }else cout << "Test fail!";
     return 0;
 }

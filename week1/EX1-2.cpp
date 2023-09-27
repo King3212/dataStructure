@@ -25,8 +25,8 @@ class LinkList{
         }
         LinkList(T x);
         LinkList();
-        bool pushback(T x);
-        bool pushforward(T x);
+        bool pushBack(T x);
+        bool pushForward(T x);
         bool sortedInsert(T x);
         T get(int x);
         void clear();
@@ -36,18 +36,16 @@ class LinkList{
 template<class T>
 bool LinkList<T>::sortedInsert(T x){
     if(size == 0){
-        pushforward(x);
-        size ++;
+        pushForward(x);
         return true;
     }
     try {
-        if(x < head->data){
-            pushforward(x);
-            size ++;
+        if(x < head->next->data){
+            pushForward(x);
             return true;
         }
-        Node<T> *temp = head,*keep = head;
-        while(temp && x > temp->data){
+        Node<T> *temp = head->next,*keep = head->next;
+        while(temp && temp->data < x){
             keep = temp;
             temp = temp->next;
         }
@@ -55,8 +53,9 @@ bool LinkList<T>::sortedInsert(T x){
         newOne->data = x;
         newOne->next = keep->next; 
         keep->next = newOne;
-        if(keep == tail){
-            tail = newOne;
+        if(keep == tail->next){
+            tail->next = newOne;
+            newOne->next = nullptr;
         }
         size++;
         return true;
@@ -86,16 +85,18 @@ void LinkList<T>::clear()
     Node<T> *temp = head->next,*next = nullptr;
     while (temp)
     {
-        
-        if (temp->next != nullptr)
+        if (temp == tail->next)
         {
-            next = temp->next;
+            delete temp;
+            break;
         }
+        next = temp->next;
         delete temp;
         temp = next;
     }
     head->next = nullptr;
     tail->next = nullptr;
+    size = 0;
 }
 
 template <class T>
@@ -121,7 +122,7 @@ LinkList<T>::LinkList(){
 }
 
 template <class T>
-bool LinkList<T>::pushback(T x){
+bool LinkList<T>::pushBack(T x){
     Node<T> *temp = new Node<T>();
     temp->data = x;
     if(tail->next == nullptr)
@@ -142,10 +143,10 @@ bool LinkList<T>::pushback(T x){
 }
 
 template <class T>
-bool LinkList<T>::pushforward(T x){
+bool LinkList<T>::pushForward(T x){
     Node<T> *temp = new Node<T>();
     temp->data = x;
-    temp->next = 0;
+    temp->next = head->next;
     head->next = temp;
     if (!tail->next)
     {
@@ -155,8 +156,9 @@ bool LinkList<T>::pushforward(T x){
     size++;
     return true;
 }
-
+#include <algorithm>
 #include<vector>
+#include<random>
 bool test(){
     /*
     *test the sortedInsert()
@@ -182,7 +184,7 @@ bool test(){
     cout << "test2:" << endl;
     for (int i = 0; i < 2; i++)
     {
-        one->pushback(testData[i]);
+        one->pushBack(testData[i]);
     }
     one->show();
     cout << "insert:" << insertedOne << endl << "finish:" << endl;
@@ -197,7 +199,7 @@ bool test(){
     cout << "test3:" << endl;
     for (int i = 0; i < 4; i++)
     {
-        one->pushback(testData[i]);
+        one->pushBack(testData[i]);
     }
     one->show();
     cout << "insert:" << insertedOne << endl << "finish:" << endl;
@@ -212,7 +214,7 @@ bool test(){
     cout << "test4:" << endl;
     for (int i = 2; i < 5; i++)
     {
-        one->pushback(testData[i]);
+        one->pushBack(testData[i]);
     }
     one->show();
     cout << "insert:" << insertedOne << endl << "finish:" << endl;
@@ -225,19 +227,32 @@ bool test(){
 
     //test 5
     //LinkList is full, insert
+    int testTimes = 1000;
     cout << "test5:" << endl;
-    for (int i = 0; i < 5; i++)
+    testData.clear();
+    srand(time(nullptr));
+    for (int i = 0; i < testTimes; i++)
     {
-        one->pushback(testData[i]);
+        testData.push_back(rand());
     }
-    one->show();
-    cout << "insert:" << insertedOne << endl << "finish:" << endl;
-    one->sortedInsert(insertedOne);
-    one->show();
-    if (one->get(2) != insertedOne) return false;
+    for (int i = 0; i < testTimes; i++)
+    {
+        if(! one->sortedInsert(testData[i])) return false;
+    }
+    cout << testTimes << " items are inserted" << endl;
+    sort(testData.begin(),testData.end());
+
+    for (int i = 0; i < testTimes; i++)
+    {
+        if (one->get(i) != testData[i])
+        {
+            return false;
+        }
+    }
     one->clear();
     cout << "test5 pass" << endl << endl;
     return true;
+
 }
 
 
