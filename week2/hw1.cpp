@@ -12,33 +12,28 @@ class recList
 {
 private:
     Node<T> *head;
-    Node<T> *creat(T stop,int length);
+    Node<T> *creat(int length);
     void print(Node <T> *p);
     void reverse(Node<T> *node, Node<T> *newHead);
 public:
-    void Creat(T stop, int length = -1);
+    void Creat(int length = -1);
     void Reverse();
     void Print();
 };
 
 
 template<class T>
-Node<T> * recList<T>::creat(T stop,int length){
+Node<T> * recList<T>::creat(int length){
     T x;
     if (length == 0)
     {
         return nullptr;
     }
     cin >> x;
-    if(x == stop){
-        return nullptr;
-    }
-    else{
-        Node<T> *one = new Node<T>();
-        one->data = x;
-        one->next = creat(stop, length -1);
-        return one;
-    }
+    Node<T> *one = new Node<T>();
+    one->data = x;
+    one->next = creat(length -1);
+    return one;
 }
 
 template <class T>
@@ -68,9 +63,9 @@ void recList<T>::reverse(Node<T> *node,Node<T> *newHead)
 }
 
 template<class T>
-void recList<T>::Creat(T stop, int length){
+void recList<T>::Creat(int length){
     head = new Node<T>();
-    head->next = creat(stop,length);
+    head->next = creat(length);
 }
 
 template<class T>
@@ -95,13 +90,13 @@ int main()
     {
         recList<int> one;
         int length;
+        cout << "Please input length,-1 for exit:\n";
         cin >> length;
         if (length == -1)
         {
             return 0;
         }
-        cout << "Please input length,-1 for exit:\n";
-        one.Creat(-1,length);
+        one.Creat(length);
         cout << "Before reverse:\n";
         one.Print();
         one.Reverse();

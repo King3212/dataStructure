@@ -249,5 +249,6 @@ int main(){
     if (Test()){
         cout << "Test pass!" << endl;
     }else cout << "Test fail!";
+    system("pause");
     return 0;
 }

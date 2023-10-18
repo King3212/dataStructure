@@ -369,6 +369,7 @@ int main(){
     if (test()){
         cout << "All tests pass!" << endl;
     }else cout << "Tests fail!";
+    system("pause");
     return 0;
 }
 

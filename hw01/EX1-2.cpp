@@ -156,6 +156,8 @@ bool LinkList<T>::pushForward(T x){
     size++;
     return true;
 }
+
+
 #include <algorithm>
 #include<vector>
 #include<random>
@@ -260,5 +262,6 @@ int main(){
     if (test()){
         cout << "All tests pass!" << endl;
     }else cout << "Tests fail!";
+    system("pause");
     return 0;
 }
