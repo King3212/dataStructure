@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stack>
+#include<math.h>
 using namespace std;
 template <class T>
 class tree
@@ -52,6 +53,16 @@ void tree<T>::middleOut()
         }
         cout << arr[waiting.top()] << " ";
         waiting.pop();
+        if (waiting.empty())
+        {
+            int temp = (int)log2(index);
+            if (index/2 == pow(2,temp)-1)
+            {
+                break;
+            }
+            index = index/2+1;
+            continue;
+        }
         index = waiting.top();
         cout << arr[index] << " ";
         waiting.pop();
@@ -62,13 +73,18 @@ void tree<T>::middleOut()
 
 
 int main(){
-    int length, temp;
+    cout << "Please input length:\n";
+    int length;
     cin >> length;
-    while (temp != -1)
+    while (length != -1)
     {
         tree<int> data = tree<int>(length);
+        cout << "Please input numbers:\n";
         data.input();
+        cout << "Input complete! Here is output:\n";
         data.middleOut();
+        cout << "Please input length:\n";
+        cin >> length;
     }
     return 0;
 }
