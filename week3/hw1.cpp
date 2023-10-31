@@ -73,17 +73,17 @@ void tree<T>::middleOut()
 
 
 int main(){
-    cout << "Please input length:\n";
+    cout << "输入完全二叉树的元素个数（以-1结束整个程序的运行）：\n";
     int length;
     cin >> length;
     while (length != -1)
     {
         tree<int> data = tree<int>(length);
-        cout << "Please input numbers:\n";
+        cout << "输入二叉树的结点数据：\n";
         data.input();
-        cout << "Input complete! Here is output:\n";
+        cout << "输出：\n";
         data.middleOut();
-        cout << "Please input length:\n";
+        cout << "输入完全二叉树的元素个数（以-1结束整个程序的运行）：\n";
         cin >> length;
     }
     return 0;
