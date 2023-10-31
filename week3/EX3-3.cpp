@@ -63,23 +63,24 @@ vector<string> split(string str, char sign = ' '){
 
 int main() {
     int numTrees;
-    cout << "Tree size:";
+    cout << "输入有多少棵二叉树要进行测试（以-1结束整个程序的运行）：";
     cin >> numTrees;
-
-    while (numTrees != -1) {
+    cin.ignore();
+    while (numTrees != -1 && numTrees) {
         vector<string> postorder, inorder;
         // 输入后序遍历序列
-        cout << "后序遍历：";
+        cout << "输入二叉树的后序遍历序列：" << endl;
         string str;
         getline(std::cin,str);
         postorder = split(str);
         // 输入中序遍历序列
-        cout<<"中序遍历：";
+        cout<<"输入二叉树中序遍历序列" << endl;
         getline(std::cin,str);
         inorder = split(str);
 
         // 输出前序遍历序列
         TreeNode<string>* root = buildTree(postorder, inorder);
+        cout << "二叉树的前序遍历序列" << endl;
         preorderRec(root);
         cout << endl;
 
