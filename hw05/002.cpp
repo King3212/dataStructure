@@ -1,7 +1,6 @@
-#include"BST.h"
-#include<iostream>
+#include "BST.h"
+#include <iostream>
 using namespace std;
-
 
 int main(){
     BST<int> tree;
@@ -33,6 +32,7 @@ int main(){
         if(tree.Search(data)){
             cout << "查找成功\n";
         }else cout << "查找失败\n";
+		cout << "\n";
     }
     return 0;
 }

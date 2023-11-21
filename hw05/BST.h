@@ -140,7 +140,7 @@ TreeNode<T> *BST<T>::search(TreeNode<T> *node, T Data)
 				return nullptr;
 			}
 			else return node;
-		}else if(node->data < Data){
+		}else if(node->data > Data){
 			return search(node->leftChild, Data);
 		}else{
 			return search(node->rightChild, Data);
@@ -154,8 +154,7 @@ TreeNode<T> *BST<T>::search(TreeNode<T> *node, T Data)
 template <class T>
 TreeNode<T> *BST<T>::search(T Data)
 {
-	search(root,Data);
-    return nullptr;
+	return search(root,Data);
 }
 
 template <class T>
