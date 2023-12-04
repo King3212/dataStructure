@@ -1,9 +1,8 @@
-#include"Gragh.hh"
+
 #include <iostream>
 #include <vector>
-#include<queue>
+#include <queue>
 #include <algorithm>
-using namespace std;
 using namespace std;
 
 // 定义边的结构体
@@ -54,6 +53,50 @@ public:
     }
 };
 
+
+vector<Edge> prim(vector<vector<int>> matrix,int n){
+    vector<Edge> result;
+    int addNow = 0;
+    int counter = 1;
+    priority_queue<Edge> edges;
+    Edge one;
+
+
+    while (counter < n)
+    {
+        matrix[addNow][addNow] = 1;
+        for (int i = 0; i < n; i++)
+        {
+            if (i == addNow)
+            {
+                continue;
+            }
+            if (!matrix[i][i])
+            {
+                one.start = addNow;
+                one.end = i;
+                one.weight = matrix[i][addNow];
+                edges.push(one);
+            }
+            
+        }
+
+        while (true)
+        {
+            one = edges.top();
+            edges.pop();
+            if (!matrix[one.end][one.end])
+            {
+                break;
+            }
+        }
+        result.push_back(one);
+        addNow = one.end;
+        counter++;
+    }
+    return result;
+}
+
 vector<Edge> kruskal(vector<Edge>& edges, int numsV){
     vector<Edge> result;
     priority_queue<Edge> heap;
@@ -88,10 +131,10 @@ int main(int argc, char const *argv[])
         cin >> x >> y;
         if (y == -1 && x == -1)
         {
-            exit(0);
+            break;
         }else if (x != y)
         {
-            exit(1);
+            break;
         }
         vector<Edge> edges;
         Edge edge;
@@ -109,9 +152,23 @@ int main(int argc, char const *argv[])
         for(auto i : kruskal(edges,x)){
             i.print();
         }
+
+        
     }
     
-    
+    cout << "prim:" << endl;
+
+    int n = 4;
+    vector<vector<int>> matrix = {
+    {0, 2, 0, 6},
+    {2, 0, 3, 8},
+    {0, 3, 0, 0},
+    {6, 8, 0, 0}
+    };
+
+    for(auto i : prim(matrix, n)){
+        i.print();
+    }
     
     return 0;
 }
