@@ -57,14 +57,32 @@ int main()
     wideFirst(matrixCp,0);
     cout << endl;
     **/
-    int x,y;
+    int x,y,temp;
     while(true){
+        cout << "邻接矩阵的行总数和列总数，以输入 -1  -1  来结束整个程序的运行。";
         cin >> x >> y;
-        if(x == y && x == -1){
+        if(x != y) break;
+        if(x == -1){
             break;
         }
+        cout << "邻接矩阵的每行数据（整数）" << endl;
         vector<vector<int>> matrix;
-        while(x > 0){
-            matrix
+        for (int i = 0; i < x; i++)
+        {
+            matrix.push_back(vector<int>());
+            for (int j = 0; j < y; j++)
+            {
+                cin >> temp;
+                (matrix[i]).push_back(temp);
+            }
+        }
+        cout << "输入遍历的出发点序号";
+        cin  >> temp;
+
+        cout << "deep first:\n" << endl;
+        deepFirst(matrix,temp);
+        cout << "width first:\n" << endl;
+        wideFirst(matrix,temp);
+    }
     return 0;
 }
