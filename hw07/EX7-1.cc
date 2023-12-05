@@ -37,6 +37,8 @@ public:
         return x;
     }
     void unionSets(int x, int y){
+        x = find(x);
+        y = find(y);
         if (rank[x] < rank[y])
         {
             parent[x] = y;
@@ -136,39 +138,34 @@ int main(int argc, char const *argv[])
         {
             break;
         }
+        vector<vector<int>> matrix;
         vector<Edge> edges;
         Edge edge;
         for (int i = 0; i < x; i++)
         {
+            matrix.push_back(vector<int>());
             for (int j = 0; j < y; j++)
             {
                 cin >> edge.weight;
                 edge.start = i;
+                (matrix[i]).push_back(edge.weight);
                 edge.end = j;
                 edges.push_back(edge);
             }
             
         }
+        cout << "kruskal"<< endl;
         for(auto i : kruskal(edges,x)){
             i.print();
         }
-
         
+        cout << "prim:"<< endl;
+        for(auto i : prim(matrix, x)){
+            i.print();
+        }
     }
     
-    cout << "prim:" << endl;
 
-    int n = 4;
-    vector<vector<int>> matrix = {
-    {0, 2, 0, 6},
-    {2, 0, 3, 8},
-    {0, 3, 0, 0},
-    {6, 8, 0, 0}
-    };
-
-    for(auto i : prim(matrix, n)){
-        i.print();
-    }
     
     return 0;
 }
