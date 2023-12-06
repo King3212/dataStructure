@@ -6,11 +6,12 @@ using namespace std;
 
 
 void deepfirst(vector<vector<int>>& matrix,int start){
+    matrix[start][start] = 1;
     cout << start << " ";
     for(int i = 0; i < matrix.size(); i++)
     {
         if(i == start){
-            matrix[i][i] = 1;
+            continue;
         }
         else if(!matrix[i][i] && matrix[start][i]){
             deepfirst(matrix,i);
@@ -20,6 +21,7 @@ void deepfirst(vector<vector<int>>& matrix,int start){
 void deepFirst(vector<vector<int>> matrix,int start){
     vector<vector<int>> cp = matrix;
     deepfirst(cp,start);
+    cout << endl;
 }
 void wideFirst(vector<vector<int>> matrix,int start){
     int counter = 1;
@@ -41,31 +43,19 @@ void wideFirst(vector<vector<int>> matrix,int start){
             }
         }
     }
+    cout << endl;
 }
 int main()
 {
-    /**
-    vector<vector<int>> matrix = {
-        {0,1,0,1,0},
-        {1,0,1,1,0},
-        {0,1,0,1,1},
-        {1,1,1,0,0},
-        {0,0,1,0,0}
-    },matrixCp = matrix;
-    deepfirst(matrix,0);
-    cout << endl;
-    wideFirst(matrixCp,0);
-    cout << endl;
-    **/
     int x,y,temp;
     while(true){
-        cout << "邻接矩阵的行总数和列总数，以输入 -1  -1  来结束整个程序的运行。";
+        cout << "邻接矩阵的行总数和列总数，以输入 -1 -1 来结束整个程序的运行。\n";
         cin >> x >> y;
         if(x != y) break;
         if(x == -1){
             break;
         }
-        cout << "邻接矩阵的每行数据（整数）" << endl;
+        cout << "邻接矩阵的每行数据（整数）\n" << endl;
         vector<vector<int>> matrix;
         for (int i = 0; i < x; i++)
         {
@@ -76,13 +66,13 @@ int main()
                 (matrix[i]).push_back(temp);
             }
         }
-        cout << "输入遍历的出发点序号";
+        cout << "输入遍历的出发点序号\n";
         cin  >> temp;
-
-        cout << "deep first:\n" << endl;
-        deepFirst(matrix,temp);
-        cout << "width first:\n" << endl;
+        cout << "广度优先遍历序列" << endl;
         wideFirst(matrix,temp);
+        cout << "深度优先遍历序列" << endl;
+        deepFirst(matrix,temp);
+        cout << endl;
     }
     return 0;
 }

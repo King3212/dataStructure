@@ -12,7 +12,7 @@ int main()
 {
     int n,temp;
     while(true){
-        cout << "图的结点总数，以输入 -1  来结束整个程序的运行。";
+        cout << "图的结点总数，以输入 -1 来结束整个程序的运行。\n";
         cin >> n;
         if(n == -1){
             break;
@@ -34,19 +34,19 @@ int main()
             
         }
         
-
-
-        cout << "输入遍历的出发点序号";
+        cout << "输入遍历的出发点序号\n";
         cin  >> temp;
 
-        cout << "deep first:\n" << endl;
-        deepFirst(tables,temp);
-        cout << "width first:\n" << endl;
+        cout << "广度优先遍历序列" << endl;
         wideFirst(tables,temp);
+        cout << "深度优先遍历序列" << endl;
+        deepFirst(tables,temp);
+        cout << endl;
     }
+    return 0;
 }
 
-void deepFirst(vector<list<pair<int,int>>> tables, vector<int> visits,int start){
+void deepFirst(vector<list<pair<int,int>>> tables, vector<int> &visits,int start){
     if (visits[start]) return;
     cout << start << " ";
     visits[start] = 1;
@@ -70,9 +70,8 @@ void wideFirst(vector<list<pair<int,int>>> tables,int start)
     cout << start << " ";
     
     queue<int> nodes;
-    int counter = 1;
     nodes.push(start);
-    while (counter < tables.size())
+    while (!nodes.empty())
     {
         start = nodes.front();
         nodes.pop();
@@ -82,10 +81,9 @@ void wideFirst(vector<list<pair<int,int>>> tables,int start)
                 nodes.push(i.first);
                 visits[i.first] = 1;
                 cout << i.first << " ";
-                counter++;
             }
             
         }
     }
-    
+    cout << endl;
 }
