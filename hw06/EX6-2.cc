@@ -71,6 +71,7 @@ void wideFirst(vector<list<pair<int,int>>> tables,int start)
     
     queue<int> nodes;
     int counter = 1;
+    nodes.push(start);
     while (counter < tables.size())
     {
         start = nodes.front();
