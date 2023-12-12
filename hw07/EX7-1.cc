@@ -8,7 +8,6 @@ using namespace std;
 
 
 
-// 定义边的结构体
 struct Edge {
     int start, end, weight;
     bool operator<(const Edge& other) const {
