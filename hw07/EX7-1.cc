@@ -132,6 +132,7 @@ int main(int argc, char const *argv[])
 {
     int x,y,temp;
     while(true){
+        cout << "邻接矩阵的行总数和列总数，以输入 -1  -1  来结束整个程序的运行。" << endl;
         cin >> x >> y;
         if (y == -1 && x == -1)
         {
@@ -143,6 +144,7 @@ int main(int argc, char const *argv[])
         vector<vector<int>> matrix;
         vector<Edge> edges;
         Edge edge;
+        cout << "邻接矩阵的每行数据（整数）" << endl;
         for (int i = 0; i < x; i++)
         {
             matrix.push_back(vector<int>());
@@ -156,19 +158,16 @@ int main(int argc, char const *argv[])
             }
             
         }
-        cout << "kruskal"<< endl;
+        cout << "卡鲁斯卡尔求最小生成树的结果序列"<< endl;
         for(auto i : kruskal(edges,x)){
             i.print();
         }
         
-        cout << "prim:"<< endl;
+        cout << "普里姆求最小生成树的结果序列"<< endl;
         for(auto i : prim(matrix, x)){
             i.print();
         }
     }
-    
-
-    
     return 0;
 }
 
