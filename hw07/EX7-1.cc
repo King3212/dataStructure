@@ -158,6 +158,20 @@ int main(int argc, char const *argv[])
             }
             
         }
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (matrix[i][j] != matrix[j][i])
+                {
+                    cout << "非无向图！"<< endl;
+                    exit(1);
+                }
+                
+            }
+            
+        }
+        
         cout << "卡鲁斯卡尔求最小生成树的结果序列"<< endl;
         for(auto i : kruskal(edges,x)){
             i.print();

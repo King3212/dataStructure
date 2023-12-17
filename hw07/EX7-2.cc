@@ -4,6 +4,9 @@
 
 using namespace std;
 
+#define int_max (32767)
+
+
 struct Edge {
     int start, end, weight;
     bool operator<(const Edge& other) const {
@@ -32,7 +35,7 @@ void Dijkstra(vector<vector<int>> matrix, int start){
 
     for (int i = 0; i < n; i++)
     {
-        Min = __INT16_MAX__;
+        Min = int_max;
         for (int k = 0; k < n; k++)
         {
             if (matrix[k][k] == 0 && dist[k] < Min)
@@ -57,7 +60,7 @@ void Dijkstra(vector<vector<int>> matrix, int start){
     for (int end = 0; end < n; end++)
     {
         cout << start << " --> " << end << " : ";
-        if (dist[end] == __INT16_MAX__)
+        if (dist[end] == int_max)
         {
             cout << "无通路";
         }else{
@@ -102,9 +105,11 @@ int main()
             
         }
 
-
-        cout << "输入源点对应的结点序号：\n";
-        cin >> temp;
-        Dijkstra(matrix,temp);
+        if(x > 0){
+            cout << "输入源点对应的结点序号：\n";
+            cin >> temp;
+            Dijkstra(matrix,temp);
+        }
+        
     }
 }
