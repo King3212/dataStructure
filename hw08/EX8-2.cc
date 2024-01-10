@@ -7,7 +7,7 @@ class maxHeap
 {
 private:
     vector<T> array;
-    void fixB(int loc){
+    void fixB(int loc){//向上
         if (loc == 1) return;
         else{
             int parent = loc / 2;
@@ -19,7 +19,7 @@ private:
             return;
         }
     }
-    void fixT(int loc = 1){
+    void fixT(int loc = 1){//向下
         if (loc >= array.size())
         {
             return;

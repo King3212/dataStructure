@@ -9,7 +9,7 @@ void topu_sort(vector<list<int>> tables){
     stack<int> zeroVs;
     int V;
     int n = tables.size();
-    vector<int> nodes = vector<int>(n);
+    vector<int> nodes = vector<int>(n);//每个节点被依赖的次数
 
     for (list<int> aList : tables)
     {
@@ -27,10 +27,11 @@ void topu_sort(vector<list<int>> tables){
         V = zeroVs.top();
         result.push_back(V);
         zeroVs.pop();
+        //被依赖次数为零的弹出来
         for (int node : tables[V])
         {
-            nodes[node]-=1;
-            if (nodes[node] == 0){
+            nodes[node]-=1;//被依赖项的被依赖次数-1
+            if (nodes[node] == 0){//如果次数为零就进栈
                 zeroVs.push(node);
             }
         }
